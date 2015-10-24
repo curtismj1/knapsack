@@ -28,6 +28,18 @@ public class KnapSack{
     KnapSack(){
 
     }
+    public void    outputBest(){
+        for(int i = 0; i< bestChoices.size(); i++){
+            System.out.println("Value: " + bestChoices.get(i).value + " Weight: " + bestChoices.get(i).weight);
+        }
+        System.out.println();
+    }
+    public void outputSack(){
+        for(int i = 0; i< sack.size(); i++){
+            System.out.println("Value: " + sack.get(i).value + " Weight: " + sack.get(i).weight);
+        }
+        System.out.println();
+    }
 
     boolean canFitInBag(Item item){
         if(sacWeight + item.weight > maxWeight){
@@ -50,8 +62,8 @@ public class KnapSack{
         possibleItems.remove(index);
     }
     void removeItem(int index){
-        possibleItems.add(sack.get(index));
         sacWeight -= sack.get(index).weight;
+        possibleItems.add(sack.get(index));
         sack.remove(index);
     }
 

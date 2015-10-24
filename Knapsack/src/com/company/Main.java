@@ -19,25 +19,28 @@ public class Main {
             initializeAndRun(scanner);
         }
     }
+
+    //This is where the magic happens.
+    //The idea is to process every single combination and to output the best one.
     public static List<Item> takeEmForAllTheyGot(KnapSack mySack){
         int index = 0;
+        mySack.outputBest();
         while(index < mySack.possibleItems.size()){
-            if(mySack.canFitInBag(mySack.possibleItems.get(index))){
+            if(mySack.canFitInBag(mySack.possibleItems.get(index))) {
                 mySack.takeItem(index);
-                index--;
-                if(mySack.getCurrentPrice() > mySack.optimalPrice){
+                if (mySack.getCurrentPrice() > mySack.optimalPrice) {
                     mySack.optimalPrice = mySack.getCurrentPrice();
                     mySack.bestChoices = mySack.sack;
                 }
-                return takeEmForAllTheyGot(mySack);
+                takeEmForAllTheyGot(mySack);
             }
-            mySack.removeItem(index);
             index++;
         }
-        index = 0;
+        if(mySack.sack.size() >0){
+            mySack.removeItem(mySack.sack.size()-1);
+        }
         return mySack.bestChoices;
     }
-
 
     private static void initializeAndRun(Scanner scanner)
     {
@@ -66,7 +69,7 @@ public class Main {
 
         List<Item> best = new ArrayList<>();
         best = takeEmForAllTheyGot(mySack);
-        for(Item item : mySack.bestChoices) {
+        for(Item item : best) {
             System.out.println("Item Value: " + item.value + " Item Weight: " + item.weight);
         }
         for(Item sItem : mySack.sack){
